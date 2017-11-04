@@ -6,8 +6,8 @@ public class BookVO {
 	
 	private Integer no;
 	private Date enterdate;
-	private int income;
-	private int spend;
+	private String in_out;
+	private int sum;
 	private String classify;
 	private String spend_type;
 	private String other;
@@ -24,17 +24,17 @@ public class BookVO {
 	public void setEnterdate(Date enterdate) {
 		this.enterdate = enterdate;
 	}
-	public int getIncome() {
-		return income;
+	public String getIn_out() {
+		return in_out;
 	}
-	public void setIncome(int income) {
-		this.income = income;
+	public void setIn_out(String in_out) {
+		this.in_out = in_out;
 	}
-	public int getSpend() {
-		return spend;
+	public int getSum() {
+		return sum;
 	}
-	public void setSpend(int spend) {
-		this.spend = spend;
+	public void setSum(int sum) {
+		this.sum = sum;
 	}
 	public String getClassify() {
 		return classify;
@@ -54,4 +54,6 @@ public class BookVO {
 	public void setOther(String other) {
 		this.other = other;
 	}
+	
+	
 }

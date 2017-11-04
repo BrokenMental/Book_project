@@ -19,6 +19,32 @@ public class BookController {
 	@Inject
 	private BookService service;
 	
+	@RequestMapping("/js/test.do")
+	public String searchBook(@ModelAttribute BookVO BookVO, ModelMap model, HttpServletRequest request) throws Exception{
+		
+		ArrayList<BookVO> bookList = (ArrayList<BookVO>)service.listAll(BookVO);
+    	model.put("bookList", bookList);
+    	
+    	BookVO.setNo(BookVO.getNo());
+    	BookVO.setEnterdate(BookVO.getEnterdate());
+    	BookVO.setIn_out(BookVO.getIn_out());
+    	BookVO.setSum(BookVO.getSum());
+    	BookVO.setClassify(BookVO.getClassify());
+    	BookVO.setSpend_type(BookVO.getSpend_type());
+    	BookVO.setOther(BookVO.getOther());
+    	
+    	model.put("no", BookVO.getNo());
+    	model.put("enterdate", BookVO.getEnterdate());
+    	model.put("in_out", BookVO.getIn_out());
+    	model.put("sum", BookVO.getSum());
+    	model.put("classify", BookVO.getClassify());
+    	model.put("spend_type", BookVO.getSpend_type());
+    	model.put("other", BookVO.getOther());
+		
+		return "/home";
+	}
+	
+	/*
     @RequestMapping("/js/insTest.do")
 	public String insertBook(@ModelAttribute BookVO BookVO, ModelMap model, HttpServletRequest request) throws Exception{
 		
@@ -44,5 +70,5 @@ public class BookController {
     	service.regist(BookVO);
     	
 		return "forward:/js/test.do";
-	}
+	}*/
 }

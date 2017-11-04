@@ -5,33 +5,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript"
-	src="/js/egovframework/lcms/cmm/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script>
-function form_submit(){ //조회
-	var form = document.f;
-	
-	form.submit();	
-}
+	function form_submit() { //조회
+		var form = document.f;
 
-function form_save(){
-	var form = document.f;
+		form.submit();
+	}
 	
-	form.action = "/js/insTest.do"
-	
-	form.submit();
-}
-
-$(function() {
-	$( ".datepicker" ).datepicker( {
-		dateFormat:"yy/mm/dd"
+	$(function() {
+		$(".datepicker").datepicker({
+			dateFormat : "yy/mm/dd"
+		});
 	});
-});
 </script>
 
 <style>
@@ -83,8 +73,7 @@ $(function() {
 							<option value="현금">현금</option>
 							<option value="카드">카드</option>
 					</select></td>
-					<td colspan="1" align="center"><input type="button"
-						onclick="form_submit()" value="조회"></td>
+					<td colspan="1" align="center"><input type="button" onclick="form_submit()" value="조회"></td>
 				</tr>
 			</table>
 
@@ -93,9 +82,20 @@ $(function() {
 			<table width=1300 " cellpadding="0" cellspacing="1" border="0"
 				align="center" id="Table">
 				<tr>
-					<td colspan="1" align="center">수입</td>
-					<td colspan="1" align="center">지출</td>
-					<td colspan="1" align="center"><select name="classify">
+					<td colspan="1" align="center">수입/지출</td>
+					<td colspan="1" align="center">금액</td>
+					<td colspan="2" align="center">뷴류</td>
+					<td colspan="1" align="center">지불종류</td>
+					<td colspan="4" align="center">부가설명</td>
+					<td colspan="1" align="center">저장</td>
+				</tr>
+				<tr>
+					<td colspan="1" align="center"><select name="in_out">
+							<option value="수입" selected="selected">수입</option>
+							<option value="지출">지출</option>
+					</select></td>
+					<td colspan="1" align="center"><input type="text" name="sum"></td>
+					<td colspan="2" align="center"><select name="classify">
 							<option value="미분류" selected="selected">미분류</option>
 							<option value="식비">식비</option>
 							<option value="주거/통신">주거/통신</option>
@@ -114,20 +114,8 @@ $(function() {
 							<option value="현금">현금</option>
 							<option value="카드">카드</option>
 					</select></td>
-					<td colspan="4" align="center">부가설명</td>
-					<td colspan="1" align="center">저장</td>
-				</tr>
-				<tr>
-					<td colspan="1" align="center"><input type="text"
-						name="income"></td>
-					<td colspan="1" align="center"><input type="text" name="spend"></td>
-					<td colspan="1" align="center"><input type="text"
-						name="classify"></td>
-					<td colspan="1" align="center"><input type="text"
-						name="spend_type"></td>
 					<td colspan="4" align="center"><textarea name="other"></textarea></td>
-					<td colspan="1" align="center"><input type="button"
-						onclick="form.save()" value="저장"></td>
+					<td colspan="1" align="center"><input type="button" value="저장"></td>
 				</tr>
 			</table>
 
@@ -138,31 +126,28 @@ $(function() {
 				<tr>
 					<td colspan="1" align="center">순번</td>
 					<td colspan="1" align="center">날짜</td>
-					<td colspan="1" align="center">수입</td>
-					<td colspan="1" align="center">지출</td>
+					<td colspan="1" align="center">수입/지출</td>
+					<td colspan="1" align="center">금액</td>
 					<td colspan="1" align="center">분류</td>
 					<td colspan="1" align="center">지불종류</td>
-					<td colspan="3" align="center">부가설명</td>
-					<td colspan="1" align="center">삭제</td>
+					<td colspan="1" align="center">부가설명</td>
+					<td colspan="3" align="center">삭제</td>
 				</tr>
 
-				<%-- <c:forEach items="${booklist}" val="al" varStatus="i">
-					<tr>
-						<td colspan="1" align="center">${al.no }</td>
-						<td colspan="1" align="center">${al.enterdate }</td>
-						<td colspan="1" align="center">${al.income }</td>
-						<td colspan="1" align="center">${al.spend }</td>
-						<td colspan="1" align="center">${al.classify }</td>
-						<td colspan="1" align="center">${al.spend_type }</td>
-						<td colspan="1" align="center"><textarea>${al.other }</textarea></td>
-						<td colspan="1" align="center"><input type="checkbox"
-							name="all" id="all_chk" onclick="check()"></td>
-						<td colspan="1" align="center"><input type="checkbox"
-							class="chkBox" name="chk_${i.index }" value="${al.idx }"></td>
-						<td colspan="1" align="center"><input type="button"
-							onclick="form_delete( ${al.idx})" value="삭제"></td>
-					</tr>
-				</c:forEach> --%>
+				<tr>
+				<c:forEach items="${bookList }" var="list" varStatus="i">
+					<td colspan="1" align="center">${list.no }</td>
+					<td colspan="1" align="center">${list.enterdate }</td>
+					<td colspan="1" align="center">${list.in_out }</td>
+					<td colspan="1" align="center">${list.sum }</td>
+					<td colspan="1" align="center">${list.classify }</td>
+					<td colspan="1" align="center">${list.spend_type }</td>
+					<td colspan="1" align="center"><textarea>${list.other }</textarea></td>
+					<td colspan="1" align="center"><input type="checkbox"></td>
+					<td colspan="1" align="center"><input type="checkbox"></td>
+					<td colspan="1" align="center"><input type="button" value="삭제"></td>
+				</c:forEach>
+				</tr>
 			</table>
 		</form>
 	</center>
