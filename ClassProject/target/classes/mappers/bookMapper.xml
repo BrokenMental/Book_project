@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.inhatc.mapper.BookMapper">
+
+	<insert id="create">
+		insert into tbl_book(income, spend, classify,
+		spend_type, other)
+		values(#{income}, #{spend}, #{classify},
+		#{spend_type}, #{other})
+	</insert>
+
+	<select id="read" resultType="com.inhatc.domain.BookVO">
+		select * from tbl_book where
+		between #first_date# and #last_date#
+	</select>
+
+	<update id="update">
+		update tbl_book set income=#{income}, spend=#{spend},
+		classify=#{classify},
+		spend_type=#{spend_type}, other=#{other}
+		where
+		no=#{no}
+	</update>
+
+	<delete id="delete">
+		delete from tbl_book where no=#{no}
+	</delete>
+
+	<select id="listAll" resultType="com.inhatc.domain.BookVO">
+	<![CDATA[
+	select * from tbl_book 
+		where no > 0
+		order by no desc, enterdate desc
+	]]>
+	</select>
+</mapper>
