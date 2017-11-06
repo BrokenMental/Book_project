@@ -19,7 +19,7 @@ public class BookController {
 	@Inject
 	private BookService service;
 	
-	@RequestMapping("/js/test.do")
+	@RequestMapping("/book/*")
 	public String searchBook(@ModelAttribute BookVO BookVO, ModelMap model, HttpServletRequest request) throws Exception{
 		
 		ArrayList<BookVO> bookList = (ArrayList<BookVO>)service.listAll(BookVO);

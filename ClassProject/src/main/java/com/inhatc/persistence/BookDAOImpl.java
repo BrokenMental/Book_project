@@ -32,14 +32,14 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public void update(BookVO vo) throws Exception {
 		// TODO Auto-generated method stub
-		session.update(namespace+".create", vo);
+		session.update(namespace+".update", vo);
 		
 	}
 
 	@Override
 	public void delete(Integer no) throws Exception {
 		// TODO Auto-generated method stub
-		session.delete(namespace+".create", no);
+		session.delete(namespace+".delete", no);
 		
 	}
 

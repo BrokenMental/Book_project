@@ -135,7 +135,7 @@
 				</tr>
 
 				<tr>
-				<c:forEach items="${bookList }" var="list" varStatus="i">
+				<c:forEach items="${bookList }" var="list">
 					<td colspan="1" align="center">${list.no }</td>
 					<td colspan="1" align="center">${list.enterdate }</td>
 					<td colspan="1" align="center">${list.in_out }</td>
