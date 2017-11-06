@@ -7,11 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.inhatc.domain.BookVO;
 import com.inhatc.service.BookService;
+import com.inhatc.util.DateUtil;
 
 @Controller
 public class BookController {
@@ -19,8 +22,27 @@ public class BookController {
 	@Inject
 	private BookService service;
 	
-	@RequestMapping("/book/*")
+	@RequestMapping("/")
 	public String searchBook(@ModelAttribute BookVO BookVO, ModelMap model, HttpServletRequest request) throws Exception{
+		
+		String first_date="";
+    	String last_date="";
+    	
+    	//first_date, last_date
+    	if(StringUtils.isEmpty(BookVO.getFirst_date())) {
+    		first_date=DateUtil.getToday("yyyy-MM-dd");
+    		BookVO.setFirst_date(first_date);
+    	}
+    	first_date=BookVO.getFirst_date();
+    	
+    	if(StringUtils.isEmpty(BookVO.getLast_date())) {
+    		last_date=DateUtil.getToday("yyyy-MM-dd");
+    		BookVO.setLast_date(last_date);
+    	}
+    	last_date=BookVO.getLast_date();
+    	
+    	model.put("first_date", first_date);
+        model.put("last_date", last_date);
 		
 		ArrayList<BookVO> bookList = (ArrayList<BookVO>)service.listAll(BookVO);
     	model.put("bookList", bookList);
@@ -41,7 +63,7 @@ public class BookController {
     	model.put("spend_type", BookVO.getSpend_type());
     	model.put("other", BookVO.getOther());
 		
-		return "/home";
+		return "/book/home";
 	}
 	
 	/*
