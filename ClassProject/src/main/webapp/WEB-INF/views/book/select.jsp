@@ -47,7 +47,7 @@
 </head>
 <body>
 	<div class ="center">
-		<form method="post" name="f">
+		<form action="/book/select" method="post" name="f">
 			<h1 align="center">가계부</h1>
 
 			<table width="1300" cellpadding="0" cellspacing="1" border="0" align="center" id="Table">
@@ -80,7 +80,7 @@
 					<td colspan="1" align="center"><input type="button" onclick="form_submit()" value="조회"></td>
 				</tr>
 			</table>
-		</form>
+
 			<HR width="900" color="white">
 
 			<table width=1300 " cellpadding="0" cellspacing="1" border="0" align="center" id="Table">
@@ -151,6 +151,7 @@
 					</tr>
 				</c:forEach>
 			</table>
+		</form>
 	</div>
 </body>
 </html>

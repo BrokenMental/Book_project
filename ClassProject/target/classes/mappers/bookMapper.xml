@@ -24,8 +24,9 @@
 	</delete>
 
 	<select id="listAll" resultType="com.inhatc.domain.BookVO">
-	select * from tbl_book 
-		where no > 0
-		order by no desc, enterdate desc
+		select * from tbl_book
+		<!--where enterdate between #{first_date} and #{last_date}
+		and in_out = #{in_out} and classify = #{classify} and spend_type = #{spend_type}
+		order by no desc, enterdate desc-->
 	</select>
 </mapper>
