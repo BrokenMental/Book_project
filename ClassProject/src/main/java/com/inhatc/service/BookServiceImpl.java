@@ -46,5 +46,23 @@ public class BookServiceImpl implements BookService {
 		return dao.listAll(bookVO);
 	}
 
+	@Override
+	public List<BookVO> typelist(BookVO bookVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.typelist(bookVO);
+	}
+
+	@Override
+	public List<BookVO> classifylist(BookVO bookVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.classifylist(bookVO);
+	}
+
+	@Override
+	public List<BookVO> stypelist(BookVO bookVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.stypelist(bookVO);
+	}
+
 
 }

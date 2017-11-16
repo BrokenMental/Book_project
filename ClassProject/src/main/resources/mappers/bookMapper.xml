@@ -29,4 +29,16 @@
 		and in_out = #{in_out} and classify = #{classify} and spend_type = #{spend_type}
 		order by no desc, enterdate desc-->
 	</select>
+	
+	<select id="typelist" resultType="com.inhatc.domain.BookVO">
+		select * from tbl_type
+	</select>
+	
+	<select id="classifylist" resultType="com.inhatc.domain.BookVO">
+		select * from tbl_classify
+	</select>
+	
+	<select id="stypelist" resultType="com.inhatc.domain.BookVO">
+		select * from tbl_stype
+	</select>
 </mapper>

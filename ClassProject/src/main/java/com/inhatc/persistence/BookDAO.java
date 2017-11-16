@@ -18,4 +18,10 @@ public interface BookDAO {
 	public void delete(Integer no)throws Exception;
 	
 	public List<BookVO> listAll(BookVO bookVO)throws Exception;
+
+	public List<BookVO> typelist(BookVO bookVO)throws Exception;
+
+	public List<BookVO> classifylist(BookVO bookVO)throws Exception;
+
+	public List<BookVO> stypelist(BookVO bookVO)throws Exception;
 }

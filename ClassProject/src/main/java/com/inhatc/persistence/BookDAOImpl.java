@@ -46,7 +46,27 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public List<BookVO> listAll(BookVO bookVO) throws Exception{
 		// TODO Auto-generated method stub
-		return session.selectList(namespace+".listAll");
+		System.out.println(bookVO.getClassify());
+		
+		return session.selectList(namespace+".listAll", bookVO);
+	}
+
+	@Override
+	public List<BookVO> typelist(BookVO bookVO) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(namespace+".typelist");
+	}
+
+	@Override
+	public List<BookVO> classifylist(BookVO bookVO) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(namespace+".classifylist");
+	}
+
+	@Override
+	public List<BookVO> stypelist(BookVO bookVO) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(namespace+".stypelist");
 	}
 	
 

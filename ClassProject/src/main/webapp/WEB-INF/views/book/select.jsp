@@ -47,76 +47,83 @@
 </head>
 <body>
 	<div class ="center">
-		<form action="/book/select" method="post" name="f">
+		<form method="post" name="f">
 			<h1 align="center">가계부</h1>
 
 			<table width="1300" cellpadding="0" cellspacing="1" border="0" align="center" id="Table">
 				<tr>
 					<td colspan="1" align="center"><input type="text" class="datepicker" name="first_date" id="first_date" value="${first_date}" style="text-align: center;"> ~ <input type="text" class="datepicker" name="last_date" id="last_date" value="${last_date}" style="text-align: center;"></td>
-					<td colspan="1" align="center"><select name="in_out">
-							<option value="수입/지출" selected="selected">수입/지출</option>
-							<option value="수입">수입</option>
-							<option value="지출">지출</option>
-					</select></td>
-					<td colspan="1" align="center"><select name="classify">
-							<option value="미분류" selected="selected">미분류</option>
-							<option value="식비">식비</option>
-							<option value="주거/통신">주거/통신</option>
-							<option value="생활용품">생활용품</option>
-							<option value="의복/미용">의복/미용</option>
-							<option value="건강/문화">건강/문화</option>
-							<option value="교육/문화">교육/문화</option>
-							<option value="교통/차량">교통/차량</option>
-							<option value="경조사/회비">경조사/회비</option>
-							<option value="세금/이자">세금/이자</option>
-							<option value="용돈/기타">용돈/기타</option>
-							<option value="월급">월급</option>
-					</select></td>
-					<td colspan="1" align="center"><select name="spend_type">
-							<option value="지불 종류" selected="selected">지불 종류</option>
-							<option value="현금">현금</option>
-							<option value="카드">카드</option>
-					</select></td>
+					<td colspan="1" align="center">
+						<c:if test="${!empty typebox }">
+							<select name="in_out"  id="typelist" style="width:80px;" onchange="">
+								<c:forEach var="cd" items="${typebox }" varStatus="i">
+									<option value="${cd.in_out }" <c:if test="${cd.in_out eq in_out }">selected</c:if>>${cd.in_out}</option>
+								</c:forEach>
+							</select>
+						</c:if>
+					</td>
+					<td colspan="1" align="center">
+						<c:if test="${!empty classifybox }">
+							<select name="classify" id="classifylist" style="width:80px;" onchange="">
+								<c:forEach var="cd" items="${classifybox }" varStatus="i">
+									<option value="${cd.classify }" <c:if test="${cd.classify eq classify }">selected</c:if>>${cd.classify}</option>
+								</c:forEach>
+							</select>
+						</c:if>
+					</td>
+					<td colspan="1" align="center">
+					<c:if test="${!empty stypebox }">
+							<select name="spend_type" id="stypelist" style="width:80px;" onchange="">
+								<c:forEach var="cd" items="${stypebox }" varStatus="i">
+									<option value="${cd.spend_type }" <c:if test="${cd.spend_type eq spend_type }">selected</c:if>>${cd.spend_type}</option>
+								</c:forEach>
+							</select>
+						</c:if>
+					</td>
 					<td colspan="1" align="center"><input type="button" onclick="form_submit()" value="조회"></td>
 				</tr>
 			</table>
-
+		</form>
 			<HR width="900" color="white">
 
 			<table width=1300 " cellpadding="0" cellspacing="1" border="0" align="center" id="Table">
 				<tr>
 					<td colspan="1" align="center">수입/지출</td>
 					<td colspan="1" align="center">금액</td>
-					<td colspan="2" align="center">뷴류</td>
+					<td colspan="2" align="center">분류</td>
 					<td colspan="1" align="center">지불종류</td>
 					<td colspan="4" align="center">부가설명</td>
 					<td colspan="1" align="center">저장</td>
 				</tr>
 				<tr>
-					<td colspan="1" align="center"><select name="in_out">
-							<option value="수입" selected="selected">수입</option>
-							<option value="지출">지출</option>
-					</select></td>
+					<td colspan="1" align="center">
+						<c:if test="${!empty typebox }">
+							<select name="in_out"  id="selectInOut" style="width:80px;" onchange="">
+								<c:forEach var="cd" items="${typebox }" varStatus="i">
+									<option value="${cd.in_out }" <c:if test="${cd.in_out eq in_out }">selected</c:if>>${cd.in_out}</option>
+								</c:forEach>
+							</select>
+						</c:if>
+					</td>
 					<td colspan="1" align="center"><input type="text" name="sum"></td>
-					<td colspan="2" align="center"><select name="classify">
-							<option value="미분류" selected="selected">미분류</option>
-							<option value="식비">식비</option>
-							<option value="주거/통신">주거/통신</option>
-							<option value="생활용품">생활용품</option>
-							<option value="의복/미용">의복/미용</option>
-							<option value="건강/문화">건강/문화</option>
-							<option value="교육/문화">교육/문화</option>
-							<option value="교통/차량">교통/차량</option>
-							<option value="경조사/회비">경조사/회비</option>
-							<option value="세금/이자">세금/이자</option>
-							<option value="용돈/기타">용돈/기타</option>
-							<option value="월급">월급</option>
-					</select></td>
-					<td colspan="1" align="center"><select name="spend_type">
-							<option value="지불 종류" selected="selected">지불 종류</option>
-							<option value="현금">현금</option>
-							<option value="카드">카드</option>
-					</select></td>
+					<td colspan="2" align="center">
+						<c:if test="${!empty classifybox }">
+							<select name="classify" id="selectClassify" style="width:80px;" onchange="">
+								<c:forEach var="cd" items="${classifybox }" varStatus="i">
+									<option value="${cd.classify }" <c:if test="${cd.classify eq classify }">selected</c:if>>${cd.classify}</option>
+								</c:forEach>
+							</select>
+						</c:if>
+					</td>
+					<td colspan="1" align="center">
+					<c:if test="${!empty stypebox }">
+							<select name="spend_type" id="selectSpendType" style="width:80px;" onchange="">
+								<c:forEach var="cd" items="${stypebox }" varStatus="i">
+									<option value="${cd.spend_type }" <c:if test="${cd.spend_type eq spend_type }">selected</c:if>>${cd.spend_type}</option>
+								</c:forEach>
+							</select>
+						</c:if>
+					</td>
 					<td colspan="4" align="center"><textarea name="other"></textarea></td>
 					<td colspan="1" align="center"><input type="button" value="저장"></td>
 				</tr>
@@ -140,7 +147,7 @@
 				<c:forEach items="${bookList }" var="list">
 				<tr>
 					<td colspan="1" align="center" onMouseOver="this.style.background='#98FB98'" onMouseOut="this.style.background='#dddddd'">${list.no }</td>
-					<td colspan="1" align="center"><fmt:formatDate pattern="yyyy-mm-dd HH:mm" value="${list.enterdate }" /></td>
+					<td colspan="1" align="center"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${list.enterdate }" /></td>
 					<td colspan="1" align="center">${list.in_out }</td>
 					<td colspan="1" align="center">${list.sum }</td>
 					<td colspan="1" align="center">${list.classify }</td>
@@ -151,7 +158,6 @@
 					</tr>
 				</c:forEach>
 			</table>
-		</form>
 	</div>
 </body>
 </html>
