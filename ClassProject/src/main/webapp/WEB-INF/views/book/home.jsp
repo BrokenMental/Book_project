@@ -18,6 +18,14 @@
 		form.submit();
 	}
 	
+	function form_save() { //저장
+		var form = document.f;
+	
+		form.action="save";
+
+		form.submit();
+	}
+	
 	$(function() {
 		$(".datepicker").datepicker({
 			dateFormat : "yy-mm-dd"
@@ -47,7 +55,7 @@
 </head>
 <body>
 	<div class ="center">
-		<form method="post" name="f">
+		<form action = "select" method="post" name="f">
 			<h1 align="center">가계부</h1>
 
 			<table width="1300" cellpadding="0" cellspacing="1" border="0" align="center" id="Table">
@@ -125,7 +133,7 @@
 						</c:if>
 					</td>
 					<td colspan="4" align="center"><textarea name="other"></textarea></td>
-					<td colspan="1" align="center"><input type="button" value="저장"></td>
+					<td colspan="1" align="center"><input type="button" onclick="form_save" value="저장"></td>
 				</tr>
 			</table>
 

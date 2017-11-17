@@ -21,19 +21,19 @@ public class BookDAOTest {
 	private BookDAO dao;
 	
 	private static Logger logger = LoggerFactory.getLogger(BookDAOTest.class);
-	/*
+	
 	@Test
 	public void testCreate() throws Exception {
 		
 		BookVO book = new BookVO();
-		book.setIn_out("수입");
+		book.setIn_out("지출");
 		book.setSum(10000);
-		book.setClassify("용돈/기티");
+		book.setClassify("식비");
 		book.setSpend_type("현금");
 		dao.create(book);
 	}
 	
-	
+	/*
 	@Test
 	public void testRead() throws Exception {
 		 

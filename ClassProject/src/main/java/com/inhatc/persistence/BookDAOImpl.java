@@ -20,6 +20,12 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public void create(BookVO vo) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println(vo.getSum());
+		System.out.println(vo.getOther());
+		System.out.println(vo.getIn_out());
+		System.out.println(vo.getClassify());
+		System.out.println(vo.getSpend_type());
+		
 		session.insert(namespace+".create", vo);
 	}
 
@@ -46,7 +52,11 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public List<BookVO> listAll(BookVO bookVO) throws Exception{
 		// TODO Auto-generated method stub
+		System.out.println(bookVO.getFirst_date());
+		System.out.println(bookVO.getLast_date());
+		System.out.println(bookVO.getIn_out());
 		System.out.println(bookVO.getClassify());
+		System.out.println(bookVO.getSpend_type());
 		
 		return session.selectList(namespace+".listAll", bookVO);
 	}
