@@ -23,12 +23,6 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public BookVO read(Integer no) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.read(no);
-	}
-
-	@Override
 	public void modify(BookVO book) throws Exception {
 		// TODO Auto-generated method stub
 		dao.update(book);
@@ -62,6 +56,12 @@ public class BookServiceImpl implements BookService {
 	public List<BookVO> stypelist(BookVO bookVO) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.stypelist(bookVO);
+	}
+
+	@Override
+	public List<BookVO> read(BookVO bookVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.read(bookVO);
 	}
 
 

@@ -14,15 +14,13 @@
 <script>
 	function form_submit() { //조회
 		var form = document.f;
-
+		console.log("select");
 		form.submit();
 	}
 	
 	function form_save() { //저장
-		var form = document.f;
-	
-		form.action="save";
-
+		var form = document.s;
+		console.log("save");
 		form.submit();
 	}
 	
@@ -92,8 +90,10 @@
 				</tr>
 			</table>
 		</form>
+		
 			<HR width="900" color="white">
-
+			
+		<form action = "save" method="post" name="s">
 			<table width=1300 " cellpadding="0" cellspacing="1" border="0" align="center" id="Table">
 				<tr>
 					<td colspan="1" align="center">수입/지출</td>
@@ -133,9 +133,10 @@
 						</c:if>
 					</td>
 					<td colspan="4" align="center"><textarea name="other"></textarea></td>
-					<td colspan="1" align="center"><input type="button" onclick="form_save" value="저장"></td>
+					<td colspan="1" align="center"><input type="button" onclick="form_save()" value="저장"></td>
 				</tr>
 			</table>
+		</form>
 
 			<HR width="900" color="white">
 
@@ -160,7 +161,7 @@
 					<td colspan="1" align="center">${list.sum }</td>
 					<td colspan="1" align="center">${list.classify }</td>
 					<td colspan="1" align="center">${list.spend_type }</td>
-					<td colspan="1" align="center"><textarea>${list.other }</textarea></td>
+					<td colspan="1" align="center">${list.other }</td>
 					<td colspan="1" align="center"><input type="checkbox"></td>
 					<td colspan="1" align="center"><input type="button" value="삭제"></td>
 					</tr>

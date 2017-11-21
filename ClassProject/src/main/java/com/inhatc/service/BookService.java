@@ -7,7 +7,7 @@ public interface BookService {
 	
 	void regist(BookVO book)throws Exception;
 	
-	BookVO read(Integer no)throws Exception;
+	List<BookVO> read(BookVO bookVO)throws Exception;
 	
 	void modify(BookVO book)throws Exception;
 	

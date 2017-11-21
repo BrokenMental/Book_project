@@ -11,7 +11,7 @@ public interface BookDAO {
 
 	public void create(BookVO vo)throws Exception;
 	
-	public BookVO read(Integer no)throws Exception;
+	public List<BookVO> read(BookVO vo)throws Exception;
 	
 	public void update(BookVO vo)throws Exception;
 	
