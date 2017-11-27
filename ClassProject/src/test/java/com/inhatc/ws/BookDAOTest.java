@@ -51,10 +51,10 @@ public class BookDAOTest {
 		book.setSpend_type("Çö±Ý");
 		dao.update(book);
 	}
-	*/
+	
 	@Test
 	public void testDelete() throws Exception {
 		
 		dao.delete(4);
-	}
+	}*/
 }

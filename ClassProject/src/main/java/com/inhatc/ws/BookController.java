@@ -6,12 +6,16 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.inhatc.domain.BookVO;
@@ -150,39 +154,34 @@ public class BookController {
     	
         System.out.println("get1 ....... ");
         
-        model.put("in_out", BookVO.getIn_out());
-        model.put("sum", BookVO.getSum());
-        model.put("classify",BookVO.getClassify());
-        model.put("spend_type", BookVO.getSpend_type());
-        model.put("other", BookVO.getOther()); 
-        
         return mav;
 	
 	}
 	
-	/*@RequestMapping(value = "/delete")
-	public ModelAndView deleteBook(@ModelAttribute BookVO BookVO, ModelMap model, HttpServletRequest request) throws Exception{
-		
-		String first_date="";
-    	String last_date="";
-    	
-    	//first_date, last_date
-    	if(StringUtils.isEmpty(BookVO.getFirst_date())) {
-    		first_date=DateUtil.getToday("yyyy-MM-dd");
-    		BookVO.setFirst_date(first_date);
-    	}
-    	first_date=BookVO.getFirst_date();
-    	
-    	if(StringUtils.isEmpty(BookVO.getLast_date())) { 
-    		last_date=DateUtil.getToday("yyyy-MM-dd");
-    		BookVO.setLast_date(last_date);
-    	}
-    	last_date=BookVO.getLast_date();
-    	
-    	model.put("first_date", first_date);
-        model.put("last_date", last_date);
+	@RequestMapping(value = "/delete/{idx}")
+	public ResponseEntity<String> deleteBook(@PathVariable("idx") Integer idx) throws Exception{
         
-        service.remove(BookVO.getNo());
+        System.out.println("idx : " + idx);
+        
+        ResponseEntity<String> entity = null;
+        try {
+        	service.remove(idx);
+        	entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+        }catch(Exception e) {
+        	e.printStackTrace();
+        	entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        
+        System.out.println("delete......");        
+        return entity;
+	
+	}
+	
+	/*@RequestMapping(value = "/delete/{idx}")
+	public ModelAndView deleteBook(@PathVariable("idx") Integer idx, @ModelAttribute BookVO BookVO, ModelMap model) throws Exception{
+        
+        System.out.println("idx : " + idx);
+        service.remove(idx);
         
         ArrayList<BookVO> bookList = (ArrayList<BookVO>)service.read(BookVO);
     	model.put("bookList", bookList);
@@ -200,12 +199,6 @@ public class BookController {
     	mav.setViewName("book/home");
     	
         System.out.println("get1 ....... ");
-        
-        model.put("in_out", BookVO.getIn_out());
-        model.put("sum", BookVO.getSum());
-        model.put("classify",BookVO.getClassify());
-        model.put("spend_type", BookVO.getSpend_type());
-        model.put("other", BookVO.getOther()); 
         
         return mav;
 	

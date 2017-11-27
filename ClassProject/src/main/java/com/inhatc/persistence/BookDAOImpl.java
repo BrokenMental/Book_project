@@ -32,7 +32,7 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public void delete(Integer no) throws Exception {
+	public void delete(int no) throws Exception {
 		// TODO Auto-generated method stub
 		session.delete(namespace+".delete", no);
 		

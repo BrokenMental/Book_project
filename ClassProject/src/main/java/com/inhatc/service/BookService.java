@@ -11,7 +11,7 @@ public interface BookService {
 	
 	void modify(BookVO book)throws Exception;
 	
-	void remove(Integer no)throws Exception;
+	void remove(int no)throws Exception;
 	
 	List<BookVO> listAll(BookVO bookVO) throws Exception;
 

@@ -29,7 +29,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public void remove(Integer no) throws Exception {
+	public void remove(int no) throws Exception {
 		// TODO Auto-generated method stub
 		dao.delete(no);
 	}
@@ -63,6 +63,5 @@ public class BookServiceImpl implements BookService {
 		// TODO Auto-generated method stub
 		return dao.read(bookVO);
 	}
-
 
 }

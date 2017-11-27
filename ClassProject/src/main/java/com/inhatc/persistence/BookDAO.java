@@ -15,7 +15,7 @@ public interface BookDAO {
 	
 	public void update(BookVO vo)throws Exception;
 	
-	public void delete(Integer no)throws Exception;
+	public void delete(int no)throws Exception;
 	
 	public List<BookVO> listAll(BookVO bookVO)throws Exception;
 
