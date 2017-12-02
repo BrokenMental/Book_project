@@ -38,13 +38,13 @@ public class BookController {
     	
     	//first_date, last_date
     	if(StringUtils.isEmpty(BookVO.getFirst_date())) {
-    		first_date=DateUtil.getToday("yyyy-MM-dd");
+    		first_date="----------";
     		BookVO.setFirst_date(first_date);
     	}
     	first_date=BookVO.getFirst_date();
     	
     	if(StringUtils.isEmpty(BookVO.getLast_date())) {
-    		last_date=DateUtil.getToday("yyyy-MM-dd");
+    		last_date="----------";
     		BookVO.setLast_date(last_date);
     	}
     	last_date=BookVO.getLast_date();
@@ -74,6 +74,9 @@ public class BookController {
 		
 		String first_date="";
     	String last_date="";
+    	String in_out;
+    	String classify;
+    	String spend_type;
     	
     	//first_date, last_date
     	if(StringUtils.isEmpty(BookVO.getFirst_date())) {
@@ -90,6 +93,36 @@ public class BookController {
     	
     	model.put("first_date", first_date);
         model.put("last_date", last_date);
+        
+        if(BookVO.getFirst_date() == "----------") {
+
+        	first_date = null;
+        	BookVO.setFirst_date(first_date);
+        }
+
+        if(BookVO.getLast_date() == "----------") {
+        	
+        	last_date = null;
+        	BookVO.setLast_date(last_date);
+        }
+
+        if(BookVO.getIn_out() == "----") {
+
+        	in_out = null;
+        	BookVO.setIn_out(in_out);
+        }
+
+        if(BookVO.getClassify() == "-----------") {
+
+        	classify=null;
+        	BookVO.setClassify(classify);
+        }
+
+        if(BookVO.getSpend_type() == "----") {
+
+        	spend_type=null;
+        	BookVO.setSpend_type(spend_type);
+        }
         
         ArrayList<BookVO> bookList = (ArrayList<BookVO>)service.listAll(BookVO);
     	model.put("bookList", bookList);
@@ -158,6 +191,19 @@ public class BookController {
 	
 	}
 	
+	@RequestMapping(value = "/upadate")
+	public ModelAndView updateBook(@ModelAttribute BookVO BookVO, ModelMap model) throws Exception {
+		
+		service.modify(BookVO);
+		
+		ModelAndView mav = new ModelAndView();
+    	mav.setViewName("book/home");
+    	
+        System.out.println("get4 ....... ");
+        
+        return mav;
+	}
+	
 	@RequestMapping(value = "/delete/{idx}")
 	public ResponseEntity<String> deleteBook(@PathVariable("idx") Integer idx) throws Exception{
         
@@ -177,13 +223,39 @@ public class BookController {
 	
 	}
 	
-	/*@RequestMapping(value = "/delete/{idx}")
-	public ModelAndView deleteBook(@PathVariable("idx") Integer idx, @ModelAttribute BookVO BookVO, ModelMap model) throws Exception{
+	@RequestMapping(value = "/deleteall")
+	public ModelAndView deleteallBook(@ModelAttribute BookVO BookVO, ModelMap model, HttpServletRequest request) throws Exception{
+		
+		String first_date="";
+    	String last_date="";
+    	
+    	//first_date, last_date
+    	if(StringUtils.isEmpty(BookVO.getFirst_date())) {
+    		first_date=DateUtil.getToday("yyyy-MM-dd");
+    		BookVO.setFirst_date(first_date);
+    	}
+    	first_date=BookVO.getFirst_date();
+    	
+    	if(StringUtils.isEmpty(BookVO.getLast_date())) {
+    		last_date=DateUtil.getToday("yyyy-MM-dd");
+    		BookVO.setLast_date(last_date);
+    	}
+    	last_date=BookVO.getLast_date();
+    	
+    	model.put("first_date", first_date);
+        model.put("last_date", last_date);
         
-        System.out.println("idx : " + idx);
-        service.remove(idx);
-        
-        ArrayList<BookVO> bookList = (ArrayList<BookVO>)service.read(BookVO);
+		String checkRow = request.getParameter("checkRow");
+		System.out.println(checkRow);
+		String checkRowArray[] = checkRow.split(",");
+		
+		for(int i = 0; i<checkRowArray.length; i++) {
+			BookVO.setNo(Integer.parseInt(checkRowArray[i]));
+			int no = Integer.parseInt(checkRowArray[i]);
+			service.remove(no);
+		}
+		
+		ArrayList<BookVO> bookList = (ArrayList<BookVO>)service.read(BookVO);
     	model.put("bookList", bookList);
         
     	ArrayList<BookVO> typebox = (ArrayList<BookVO>)service.typelist(BookVO);
@@ -198,9 +270,9 @@ public class BookController {
     	ModelAndView mav = new ModelAndView();
     	mav.setViewName("book/home");
     	
-        System.out.println("get1 ....... ");
+        System.out.println("get5 ....... ");
         
         return mav;
 	
-	}*/
+	}
 }
