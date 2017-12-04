@@ -17,10 +17,8 @@
 	</select>
 
 	<update id="update">
-		update tbl_book set in_out=#{in_out}, sum=#{sum},
-		classify=#{classify}, spend_type=#{spend_type}, other=#{other}
-		where
-		no=#{no}
+		update tbl_book set sum=#{sum}, classify=#{classify}, other=#{other}
+		where no=#{no}
 	</update>
 
 	<delete id="delete">
@@ -32,28 +30,28 @@
 		select * from tbl_book
 		where no>0
 		]]>
-
-		<if test="#{first_date} != null and #{last_date} == null">
-			and enterdate >= #{first_date}
+		
+		<if test="!(#{first_date} eq '----------'.toString()) and #{last_date} eq '----------'.toString()">
+			and enterdate <![CDATA[ >= ]]> #{first_date}
+		</if>
+		
+		<if test="#{first_date} eq '----------').toString() and !(#{last_date} eq '----------'.toString())">
+			and enterdate <![CDATA[ <= ]]> #{last_date}
 		</if>
 
-		<if test="#{first_date} == null and #{last_date} != null">
-			and enterdate <= #{last_date}
-		</if>
-
-		<if test="#{first_date} != null and #{last_date} != null">
+		<if test="!(#{first_date} eq '----------'.toString()) and !(#{last_date} eq '----------'.toString())">
 			and between #{first_date} and #{last_date}
 		</if>
 
-		<if test="#{in_out} != null">
+		<if test="!(#{in_out} eq '----'.toString())">
 			and in_out = #{in_out}
 		</if>
 
-		<if test="#{classify} != null">
+		<if test="!(#{classify} eq '-----------'.toString())">
 			and classify = #{classify}
 		</if>
 
-		<if test="#{spend_type} != null">
+		<if test="!(#{spend_type} eq '----'.toString())">
 			and spend_type = #{spend_type}
 		</if>
 

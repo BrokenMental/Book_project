@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -94,36 +95,6 @@ public class BookController {
     	model.put("first_date", first_date);
         model.put("last_date", last_date);
         
-        if(BookVO.getFirst_date() == "----------") {
-
-        	first_date = null;
-        	BookVO.setFirst_date(first_date);
-        }
-
-        if(BookVO.getLast_date() == "----------") {
-        	
-        	last_date = null;
-        	BookVO.setLast_date(last_date);
-        }
-
-        if(BookVO.getIn_out() == "----") {
-
-        	in_out = null;
-        	BookVO.setIn_out(in_out);
-        }
-
-        if(BookVO.getClassify() == "-----------") {
-
-        	classify=null;
-        	BookVO.setClassify(classify);
-        }
-
-        if(BookVO.getSpend_type() == "----") {
-
-        	spend_type=null;
-        	BookVO.setSpend_type(spend_type);
-        }
-        
         ArrayList<BookVO> bookList = (ArrayList<BookVO>)service.listAll(BookVO);
     	model.put("bookList", bookList);
     	
@@ -191,17 +162,27 @@ public class BookController {
 	
 	}
 	
-	@RequestMapping(value = "/upadate")
-	public ModelAndView updateBook(@ModelAttribute BookVO BookVO, ModelMap model) throws Exception {
-		
-		service.modify(BookVO);
-		
-		ModelAndView mav = new ModelAndView();
-    	mav.setViewName("book/home");
-    	
-        System.out.println("get4 ....... ");
+	@RequestMapping(value = "/update/{idx}", method = {RequestMethod.PUT, RequestMethod.PATCH})
+	public ResponseEntity<String> updateBook(@PathVariable("idx") Integer idx, @RequestBody BookVO vo) throws Exception{
         
-        return mav;
+        ResponseEntity<String> entity = null;
+        try {
+        	vo.setNo(idx);
+        	
+            System.out.println("idx : " + vo.getNo());
+            System.out.println("sum : " + vo.getSum());
+            System.out.println("classify : " + vo.getClassify());
+            System.out.println("other : " + vo.getOther());
+        	service.modify(vo);
+        	entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+        }catch(Exception e) {
+        	e.printStackTrace();
+        	entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        
+        System.out.println("update......");        
+        return entity;
+	
 	}
 	
 	@RequestMapping(value = "/delete/{idx}")

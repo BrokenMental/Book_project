@@ -30,49 +30,8 @@
 	
 	function form_save() { //저장
 		var form = document.s;
-	
-		if(form.act.value=="UPD") {
-			form.action="update";
-		}else {
-			form.action="save";
-		}
+
 		form.submit();
-	}
-	
-	function form_update(IDX) {
-		
-		console.log("upadate");
-		
-		var form = document.d;
-		
-		var idx=eval("form.idx_"+IDX+".value");
-		
-		form.in_out.value = eval("form.in_out_"+IDX+".value");
-		form.sum.value = eval("form.sum_"+IDX+".value");
-		form.classify.value = eval("form.classify_"+IDX+".value");
-		form.spend_type.value = eval("form.spend_type_"+IDX+".value");
-		form.other.value = eval("form.other_"+IDX+".value");
-		
-		form.idx.value=idx;
-		
-		form.act.value = "UPD";
-		
-		var chkValue;
-		var lng;
-		var chk;
-		
-		lng=form.name.length;
-		
-		for(var i=0; i<lng; i++) {
-			chk=document.forms['d'].elements['name'].option[i].value;
-			chkValue=chk.split('|');
-			
-			if(idx == chkValue[0]) {
-				document.forms['d'].elements['name'].selectedIndex=i;
-				setValues(form.name);
-			}
-		}
-		form.sum.focus();
 	}
 	
 	function form_delete(idx) {
@@ -113,6 +72,7 @@
 			dateFormat : "yy-mm-dd"
 		});
 	});
+	
 </script>
 
 <style>
@@ -153,7 +113,7 @@
 						value="${first_date}" style="text-align: center;"> ~ <input
 						type="text" class="datepicker" name="last_date" id="last_date"
 						value="${last_date}" style="text-align: center;"></td>
-						
+
 					<td colspan="1" align="center"><c:if test="${!empty typebox }">
 							<select name="in_out" id="typelist" style="width: 80px;"
 								onchange="">
@@ -163,7 +123,7 @@
 								</c:forEach>
 							</select>
 						</c:if></td>
-						
+
 					<td colspan="1" align="center"><c:if
 							test="${!empty classifybox }">
 							<select name="classify" id="classifylist" style="width: 80px;"
@@ -193,8 +153,6 @@
 		<HR width="900" color="white">
 
 		<form action="save" method="post" name="s">
-			<input type="hidden" name="act" value="INS">
-
 			<table width=1300 " cellpadding="0" cellspacing="1" border="0"
 				align="center" id="Table">
 				<tr>
@@ -245,11 +203,10 @@
 
 		<HR width="900" color="white">
 
-		<form action="delete" method="post" name="d" id="d">
-		<input type="hidden" name="act" value="INS">
+		<form method="post" name="d" id="d">
 
 			<table width="1300" cellpadding="0" cellspacing="1" border="0"
-				align="center" id="Table">
+				align="center" name="tbl_classify" id="Table">
 				<tr>
 					<td colspan="1" align="center">순번</td>
 					<td colspan="1" align="center">날짜</td>
@@ -258,38 +215,88 @@
 					<td colspan="1" align="center">분류</td>
 					<td colspan="1" align="center">지불종류</td>
 					<td colspan="1" align="center">부가설명</td>
-					<td colspan="1" align="center"><input type="checkbox" name = "all" id="all_Chk" onclick="check()"></td>
-					<td colspan="1" align="center"><input type="button" onclick="form_alldelete()" value="삭제"></td>
+					<td colspan="1" align="center"><input type="checkbox"
+						name="all" id="all_Chk" onclick="check()"></td>
+					<td colspan="1" align="center">수정</td>
+					<td colspan="1" align="center"><input type="button"
+						onclick="form_alldelete()" value="삭제"></td>
 				</tr>
 
 				<c:forEach items="${bookList }" var="list" varStatus="i">
 					<tr>
-						<td colspan="1" align="center"
-							onMouseOver="this.style.background='#98FB98'"
-							onMouseOut="this.style.background='#dddddd'" onclick="form_update(${i.index })" >${i.count }(<input
-							type="text" readonly=readonly value="${list.no }" name="number"
-							id="number">)
+						<td colspan="1" align="center">${i.count }(<input type="text"
+							readonly=readonly value="${list.no }" name="number" id="number">)
 						</td>
 						<td colspan="1" align="center"><fmt:formatDate
 								pattern="yyyy-MM-dd HH:mm" value="${list.enterdate }" /></td>
 						<td colspan="1" align="center">${list.in_out }</td>
-						<td colspan="1" align="center">${list.sum }</td>
-						<td colspan="1" align="center">${list.classify }</td>
+						<td colspan="1" align="center"><input type="text"
+							value="${list.sum }" id="sum_${list.no }"></td>
+						<td colspan="1" align="center"><c:if
+								test="${!empty classifybox }">
+								<select name="classify" id="classify_${list.no }" style="width: 80px;"
+									onchange="">
+									<c:forEach var="cd" items="${classifybox }" varStatus="i">
+										<option id="u_classify_${list.no }" value="${cd.classify }"
+											<c:if test="${cd.classify eq list.classify }">selected</c:if>>${cd.classify}
+										</option>
+									</c:forEach>
+								</select>
+							</c:if></td>
 						<td colspan="1" align="center">${list.spend_type }</td>
-						<td colspan="1" align="center">${list.other }</td>
-						<td colspan="1" align="center"><input type="checkbox" class="chkBox" name="chk_${i.index }" value="${list.no }"></td>
+						<td colspan="1" align="center"><input type="text"
+							value="${list.other }" id="other_${list.no }"></td>
+						<td colspan="1" align="center"><input type="checkbox"
+							class="chkBox" name="chk_${i.index }" value="${list.no }"></td>
+						<td colspan="1" align="center"><input type="button"
+							onclick="form_update(${list.no })" id="btnupd" value="수정"></td>
 						<td colspan="1" align="center"><input type="button"
 							onCLick="form_delete(${list.no })" id="btndel" value="삭제"></td>
 					</tr>
 					<input type="hidden" name="idx_${i.index }" value="${list.no }">
-					<input type="hidden" name="in_out_${i.index }" value="${list.in_out }">
+					<input type="hidden" name="in_out_${i.index }"
+						value="${list.in_out }">
 					<input type="hidden" name="sum_${i.index }" value="${list.sum }">
-					<input type="hidden" name="classify_${i.index }" value="${list.classify }">
-					<input type="hidden" name="spend_type_${i.index }" value="${list.spend_type }">
-					<input type="hidden" name="other_${i.index }" value="${list.other }">
+					<input type="hidden" name="classify_${i.index }"
+						value="${list.classify }">
+					<input type="hidden" name="spend_type_${i.index }"
+						value="${list.spend_type }">
+					<input type="hidden" name="other_${i.index }"
+						value="${list.other }">
 				</c:forEach>
 			</table>
 		</form>
 	</div>
+<script>
+
+function form_update(idx) {
+	var idx = idx; 
+	var sum = document.getElementById("sum_"+idx).value;
+	var classify = document.getElementById("classify_"+idx);
+	var u_classify = classify.options[classify.selectedIndex].value;
+	var other = document.getElementById("other_"+idx).value;
+	console.log(idx);
+	console.log(sum);
+	console.log(u_classify);
+	console.log(other);
+	
+	$.ajax({
+		type:'put',
+		url:'/update/' + idx,
+		headers: {
+			"Content-Type": "application/json",
+			"X-HTTP-Method-Override": "PUT" },
+		data:JSON.stringify({idx:idx, sum:sum, classify:u_classify, other:other}),
+		dataType: 'text',
+		success:function(result){
+			console.log("result: " + result);
+			if(result == 'SUCCESS'){
+				alert('수정성공');
+				location.reload();
+			}
+		}
+	});
+}
+</script>
 </body>
 </html>

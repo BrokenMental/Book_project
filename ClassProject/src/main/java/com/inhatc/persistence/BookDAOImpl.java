@@ -27,6 +27,10 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public void update(BookVO vo) throws Exception {
 		// TODO Auto-generated method stub
+        System.out.println("idx2 : " + vo.getNo());
+        System.out.println("sum2 : " + vo.getSum());
+        System.out.println("classify2 : " + vo.getClassify());
+        System.out.println("other2 : " + vo.getOther());
 		session.update(namespace+".update", vo);
 		
 	}

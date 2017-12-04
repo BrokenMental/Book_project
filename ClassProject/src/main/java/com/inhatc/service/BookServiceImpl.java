@@ -23,9 +23,13 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public void modify(BookVO book) throws Exception {
+	public void modify(BookVO vo) throws Exception {
 		// TODO Auto-generated method stub
-		dao.update(book);
+        System.out.println("idx1 : " + vo.getNo());
+        System.out.println("sum1 : " + vo.getSum());
+        System.out.println("classify1 : " + vo.getClassify());
+        System.out.println("other1 : " + vo.getOther());
+		dao.update(vo);
 	}
 
 	@Override
