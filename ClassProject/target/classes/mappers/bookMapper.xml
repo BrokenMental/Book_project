@@ -14,10 +14,12 @@
 
 	<select id="read" resultType="com.inhatc.domain.BookVO">
 		select * from tbl_book
+		order by no desc
 	</select>
 
 	<update id="update">
-		update tbl_book set sum=#{sum}, classify=#{classify}, other=#{other}
+		update tbl_book set sum=#{sum}, classify=#{classify},
+		other=#{other}
 		where no=#{no}
 	</update>
 
@@ -30,28 +32,31 @@
 		select * from tbl_book
 		where no>0
 		]]>
-		
-		<if test="!(#{first_date} eq '----------'.toString()) and #{last_date} eq '----------'.toString()">
+
+		<if
+			test="first_date neq '----------'.toString() and last_date eq '----------'.toString()">
 			and enterdate <![CDATA[ >= ]]> #{first_date}
 		</if>
-		
-		<if test="#{first_date} eq '----------').toString() and !(#{last_date} eq '----------'.toString())">
+
+		<if
+			test="first_date eq '----------'.toString() and last_date neq '----------'.toString()">
 			and enterdate <![CDATA[ <= ]]> #{last_date}
 		</if>
 
-		<if test="!(#{first_date} eq '----------'.toString()) and !(#{last_date} eq '----------'.toString())">
-			and between #{first_date} and #{last_date}
+		<if
+			test="first_date neq '----------'.toString() and last_date neq '----------'.toString()">
+			and enterdate between #{first_date} and #{last_date}
 		</if>
 
-		<if test="!(#{in_out} eq '----'.toString())">
+		<if test="in_out neq '----'.toString()">
 			and in_out = #{in_out}
 		</if>
 
-		<if test="!(#{classify} eq '-----------'.toString())">
+		<if test="classify neq '-----------'.toString()">
 			and classify = #{classify}
 		</if>
 
-		<if test="!(#{spend_type} eq '----'.toString())">
+		<if test="spend_type neq '----'.toString()">
 			and spend_type = #{spend_type}
 		</if>
 

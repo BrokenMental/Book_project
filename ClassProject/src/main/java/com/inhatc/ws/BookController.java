@@ -75,21 +75,13 @@ public class BookController {
 		
 		String first_date="";
     	String last_date="";
-    	String in_out;
-    	String classify;
-    	String spend_type;
-    	
-    	//first_date, last_date
-    	if(StringUtils.isEmpty(BookVO.getFirst_date())) {
-    		first_date=DateUtil.getToday("yyyy-MM-dd");
-    		BookVO.setFirst_date(first_date);
-    	}
-    	first_date=BookVO.getFirst_date();
-    	
-    	if(StringUtils.isEmpty(BookVO.getLast_date())) {
-    		last_date=DateUtil.getToday("yyyy-MM-dd");
-    		BookVO.setLast_date(last_date);
-    	}
+
+    	first_date="----------";
+    	BookVO.setFirst_date(first_date);
+        first_date=BookVO.getFirst_date();
+
+    	last_date="----------";
+    	BookVO.setLast_date(last_date);
     	last_date=BookVO.getLast_date();
     	
     	model.put("first_date", first_date);
